@@ -1,0 +1,49 @@
+#include <stdio.h>
+
+// Function declarations
+void swap(int *a, int *b);  // Declare the swap function
+
+int partition(int arr[], int low, int high)
+{
+    int pivot = arr[high];  // Select the pivot (last element)
+    int i = low - 1;        // Index of smaller element
+    for (int j = low; j <= high - 1; j++) {
+        if (arr[j] < pivot) {  // If current element is smaller than the pivot
+            i++;
+            swap(&arr[i], &arr[j]);  // Swap elements
+        }
+    }
+    swap(&arr[i + 1], &arr[high]);  // Place the pivot element in the correct position
+    return (i + 1);
+}
+
+void quicksort(int arr[], int low, int high)
+{
+    if (low < high) {
+        int pi = partition(arr, low, high);  // Partitioning index
+        quicksort(arr, low, pi - 1);  // Recursively sort the left side
+        quicksort(arr, pi + 1, high); // Recursively sort the right side
+    }
+}
+
+void swap(int *a, int *b)
+{
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+
+int main()
+{
+    int arr[] = {10, 7, 8, 9, 1, 5};  // Array to be sorted
+    int n = sizeof(arr) / sizeof(arr[0]);  // Find the size of the array
+    quicksort(arr, 0, n - 1);  // Perform Quicksort
+
+    // Print the sorted array
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
